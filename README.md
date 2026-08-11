@@ -52,3 +52,5 @@ python3 main.py
     ]
 }
 ```
+## 7.git clone,pull 실습
+clone 및 pull 실습 완료
