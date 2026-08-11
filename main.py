@@ -190,7 +190,34 @@ class QuizGame:
     def show_score(self):
         print(f"\n현재까지의 역대 최고 점수는 {self.bestScore}점 입니다.")
 
-    
+    def delete_quiz(self):
+        print("\n=== 퀴즈 삭제 ===")
+        if not self.quizzes:
+            print("현재 등록된 퀴즈가 없습니다.")
+            return
+
+        self.show_quizzes()
+
+        while True:
+            del_input=input("\n삭제할 퀴즈 번호를 입력하세요(취소: 0): ").strip()
+            if not del_input:
+                continue
+            try:
+                del_idx=int(del_input)
+                if del_idx==0:
+                    print("삭제를 취소합니다. ")
+                    break
+
+                if 1<=del_idx<=len(self.quizzes):
+                    self.delete_quiz=self.quizzes.pop(del_idx-1)
+                    self.save_data()
+                    print(f"'{self.delete_quiz.qustion}' 퀴즈가 삭제되었습니다. ")
+                    break
+                else:
+                    print("목록에 있는 올바른 번호를 입력해주세요.")
+            except ValueError:
+                print("숫자만 입력 가능합니다. ")
+
 
 
 def main():
@@ -202,7 +229,8 @@ def main():
         print("2. 퀴즈 추가")
         print("3. 퀴즈 목록")
         print("4. 점수 확인")
-        print("5. 종료")
+        print("5. 퀴즈 삭제")
+        print("6. 종료")
 
         choice=input("메뉴 선택: ").strip()
 #미선택시
@@ -234,12 +262,16 @@ def main():
             print("점수 확인")
             game.show_score()
 
-        elif choice==5:
+        elif choice==4:
+            print("퀴즈 삭제")
+            game.delete_quiz()
+
+        elif choice==6:
             print("게임을 종료합니다.")
             break
 
         else:
-            print("1에서 5사이의 올바른 번호를 선택해주세요.")
+            print("1에서 6사이의 올바른 번호를 선택해주세요.")
 
 if __name__=="__main__":
     try:
