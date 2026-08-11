@@ -1,6 +1,6 @@
 import json
 import random
-
+from datetime import datetime 
 # 개별 퀴즈
 class Quiz:
     def __init__(self, question, choices, answer, hint="힌트가 없습니다."):
@@ -31,6 +31,7 @@ class QuizGame:
                 data=json.load(f)
 
             self.bestScore=data.get("best_score",0)
+            self.history=data.get("history",[])
 
             for q_data in data.get("quizzes",[]):
                 quiz_obj=Quiz(q_data["question"],q_data["choices"],q_data["answer"])
@@ -66,6 +67,7 @@ class QuizGame:
         data_to_save={
             "best_score" : self.bestScore
             "quizzes" : quiz_data_list
+            "history": self.history
         }
 
         with open('state.json','w',encoding='utf-8') as f:
@@ -185,10 +187,29 @@ class QuizGame:
             if current_score>self.best_score:
                 print(f"신기록 달성!(이전 최고 점수:{self.best_score})")
                 self.best_score=current_score
-                self.save_data()
+
+            # 점수 기록 히스토리 추가
+            play_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            record = {
+                "date": play_date,
+                "total": num_questions,
+                "score": current_score
+            }
+            self.history.append(record)
+
+            self.save_data()
 
     def show_score(self):
         print(f"\n현재까지의 역대 최고 점수는 {self.bestScore}점 입니다.")
+        print("\n=== 최근 플레이 기록 ===")
+        
+        if not self.history:
+            print("아직 플레이 기록이 없습니다.")
+            return
+
+        #최근 기록 우선순   
+        for i, record in enumerate(reversed(self.history), 1):
+            print(f"[{i}] {record['date']} - {record['score']} / {record['total']}점")
 
     def delete_quiz(self):
         print("\n=== 퀴즈 삭제 ===")
