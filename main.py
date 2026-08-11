@@ -106,48 +106,50 @@ class QuizGame:
             self.save_data()
             print("새로운 퀴즈가 등록되고 저장되었습니다. ")
 
-        def play_quiz(self):
-            if not self.quizzes:
-                print("\n등록된 퀴즈가 없습니다. 메뉴에서 퀴즈를 먼저 추가해주세요.")
-                return
+    def play_quiz(self):
+        if not self.quizzes:
+            print("\n등록된 퀴즈가 없습니다. 메뉴에서 퀴즈를 먼저 추가해주세요.")
+            return
 
-            print("\n===퀴즈 풀기 시작===")
-            current_score=0
-            total_quizzes=len(self.quizzes)
+        print("\n===퀴즈 풀기 시작===")
+        current_score=0
+        total_quizzes=len(self.quizzes)
 
-            for i,quiz in enumerate(self.quizzes,1):
-                print(f"\n[문제 {i}/{total_quizzes}]{quiz.question}")
+        for i,quiz in enumerate(self.quizzes,1):
+            print(f"\n[문제 {i}/{total_quizzes}]{quiz.question}")
 
-                for j,choice in enumerate(quiz.choices,1):
-                    print(f" {j}.{choice}")
+            for j,choice in enumerate(quiz.choices,1):
+                print(f" {j}.{choice}")
 
-                while True:
-                    answer_input=input("정답 번호(1~4)를 입력하세요: ").strip()
-                    if not answer_input:
-                        print("입력값이 없습니다. 다시 입력해주세요. ")
-                        continue
+            while True:
+                answer_input=input("정답 번호(1~4)를 입력하세요: ").strip()
+                if not answer_input:
+                    print("입력값이 없습니다. 다시 입력해주세요. ")
+                    continue
 
-                    try:
-                        user_answer=int(answer_input)
-                        if 1<=user_answer<=4:
-                            break
-                        else:
-                            print("1에서 4 사이의 번호만 입력 가능합니다.")
-
-                    except ValueError:
-                        print("숫자만 입력 가능합니다. 다시 입력해주세요.")
-
-                    if quiz.checkAnswer(user_answer):
-                        print("정답입니다!")
-                        current_score+=1
+                try:
+                    user_answer=int(answer_input)
+                    if 1<=user_answer<=4:
+                        break
                     else:
-                        print(f"오답입니다. 정답은 {quiz.answer}번입니다. ")
+                        print("1에서 4 사이의 번호만 입력 가능합니다.")
 
-                print(f"\n퀴즈 완료! 최종 점수:{current_score}/{total_quizzes}")
-                if current_score>self.best_score:
-                    print(f"신기록 달성!(이전 최고 점수:{self.best_score})")
-                    self.best_score=current_score
-                    self.save_data()
+                except ValueError:
+                    print("숫자만 입력 가능합니다. 다시 입력해주세요.")
+
+                if quiz.checkAnswer(user_answer):
+                    print("정답입니다!")
+                    current_score+=1
+                else:
+                    print(f"오답입니다. 정답은 {quiz.answer}번입니다. ")
+
+            print(f"\n퀴즈 완료! 최종 점수:{current_score}/{total_quizzes}")
+            if current_score>self.best_score:
+                print(f"신기록 달성!(이전 최고 점수:{self.best_score})")
+                self.best_score=current_score
+                self.save_data()
+
+    
 
 
 def main():
