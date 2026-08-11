@@ -1,4 +1,5 @@
 import json
+import random
 
 # 개별 퀴즈
 class Quiz:
@@ -111,6 +112,24 @@ class QuizGame:
             print("\n등록된 퀴즈가 없습니다. 메뉴에서 퀴즈를 먼저 추가해주세요.")
             return
 
+        total_available=len(self.quizzes)
+        print(f"\n== 퀴즈 풀기 시작==")
+        print(f"현재 등록된 퀴즈는 총 {total_available}개입니다.")
+
+        while True:
+            count_input=input(f"몇 문제를 푸시겠습니까? (1~{total_available}): ").strip()
+            if not count_input:
+                print("입력값이 없습니다.")
+                continue
+            try:
+                num_questions=int(count_input)
+                if 1<=num_questions<=total_available:
+                    break
+                else:
+                    print(f"1에서 {total_available} 사이의 숫자를 입력해주세요.")
+            except ValueError:
+                print("숫자만 입력 가능합니다.")
+                
         print("\n===퀴즈 풀기 시작===")
         current_score=0
         total_quizzes=len(self.quizzes)
