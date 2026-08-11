@@ -149,6 +149,9 @@ class QuizGame:
                 self.best_score=current_score
                 self.save_data()
 
+    def show_score(self):
+        print(f"\n현재까지의 역대 최고 점수는 {self.bestScore}점 입니다.")
+
     
 
 
@@ -191,6 +194,7 @@ def main():
 
         elif choice==4:
             print("점수 확인")
+            game.show_score()
 
         elif choice==5:
             print("게임을 종료합니다.")
