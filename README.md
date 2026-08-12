@@ -24,7 +24,10 @@ python3 main.py
 
 ## 5. 파일 구조
 📦 프로젝트 루트
-┣ 📜 main.py       # 게임 메인 실행 루프, Quiz 및 QuizGame 클래스 코드
+┣ 📜 main.py       # 프로그램 진입점, 메뉴 흐름 제어
+┣ 📜 quiz_game.py  # QuizGame 클래스 (게임 로직, 메뉴별 기능)
+┣ 📜 quiz.py       # Quiz 클래스 (개별 퀴즈 데이터)
+┣ 📜 storage.py    # QuizStorage 클래스 (state.json 읽기/쓰기)
 ┣ 📜 state.json    # 상태 저장을 위한 JSON 데이터 파일
 ┗ 📜 README.md     # 프로젝트 문서
 
@@ -51,3 +54,7 @@ python3 main.py
     ]
 }
 ```
+## 7. 코드 구조 (클래스 책임 분리)
+- **Quiz**: 개별 퀴즈 데이터(문제, 선택지, 정답, 힌트)와 정답 확인 로직을 담당
+- **QuizGame**: 퀴즈 목록/점수 상태 관리, 메뉴 흐름, 게임 진행 로직을 담당
+- **QuizStorage**: state.json 파일의 읽기/쓰기만 전담. 저장 방식이 바뀌어도(예: DB로 전환) QuizGame 코드는 영향받지 않도록 분리함
