@@ -248,9 +248,9 @@ class QuizGame:
                     break
 
                 if 1<=del_idx<=len(self.quizzes):
-                    self.delete_quiz=self.quizzes.pop(del_idx-1)
+                    self.deleted_quiz=self.quizzes.pop(del_idx-1)
                     self.save_data()
-                    print(f"'{self.delete_quiz.qustion}' 퀴즈가 삭제되었습니다. ")
+                    print(f"'{self.delete_quiz.question}' 퀴즈가 삭제되었습니다. ")
                     break
                 else:
                     print("목록에 있는 올바른 번호를 입력해주세요.")
